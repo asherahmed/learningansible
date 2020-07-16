@@ -1,0 +1,6 @@
+- hosts: myserver
+  remote_user: root
+  tasks:
+    - name: use role
+      include_role:
+        name: scripts
