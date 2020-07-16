@@ -1,0 +1,4 @@
+- hosts: ansibleslave
+  become: yes
+  roles:
+    - update_ubuntu

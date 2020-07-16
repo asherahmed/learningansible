@@ -1,0 +1,14 @@
+---
+- name: check grub file  # task name
+  shell: test -f  /boot/grub/menu.lst  # shell module is no different than executing a command in shell eg: /bin/sh
+  register: grub_file  # store the result of a shell command in grub_file
+  failed_when: False  # silently fail when there are errors
+
+- name: update grub
+  command: "sudo update-grub -y"  # different from shell module as this does not have access to variables like $HOME etc..
+  environment:
+    DEBIAN_FRONTEND: noninteractive  # suppress debconf questions
+  when: grub_file.rc != 0
+
+- name: update apt-packages
+  apt: "upgrade=dist update_cache=yes"  # uses apt module to upgrade distribution
