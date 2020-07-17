@@ -1,0 +1,40 @@
+---
+- name: Install required apt-packages
+  apt: "name=python-virtualenv state=present force=yes"  # this is like looping through all the items provided and install each respectively.
+
+- name: Creates directory
+  file: "path=/home/{{project_name}} state=directory"  # similar to mkdir this creates directory given by project_name
+
+- name: create virtualenv and install wagtail in it
+  pip: "name=wagtail virtualenv=/home/{{project_name}}/env virtualenv_command=virtualenv virtualenv_python=python3"
+
+- name: start a wagtail project
+  command: "/home/{{project_name}}/env/bin/wagtail start {{project_name}} chdir=/home/{{project_name}}/"
+
+- name: install requirements.txt
+  pip: "requirements=/home/{{project_name}}/{{project_name}}/requirements.txt virtualenv=/home/{{project_name}}/env virtualenv_command=virtualenv virtualenv_python=python3"
+
+- name: migrate db
+  command: "/home/{{project_name}}/env/bin/python3 manage.py migrate chdir=/home/{{project_name}}/{{project_name}}/"
+
+- name: install pip
+  apt: name=python-pip
+
+- name: install pexpect
+  pip: "name=pexpect"
+
+- name: create wagtail superuser
+  expect:
+    command: "/home/{{project_name}}/env/bin/python3 /home/{{project_name}}/{{project_name}}/manage.py createsuperuser"
+    responses:
+      Username: "admin"
+      Email address: "asherahmed1000@yahoo.com"
+      Password: "ansible123"
+      Password (again): "ansible123"
+  no_log: false
+  tags:
+    - superuser
+
+- name: wagtail collect static files
+  command: "/home/{{project_name}}/env/bin/python3 /home/{{project_name}}/{{project_name}}/manage.py collectstatic chdir=/home/{{project_name}}/{{project_name}}/"
+

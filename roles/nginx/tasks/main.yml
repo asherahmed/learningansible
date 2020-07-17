@@ -1,5 +1,16 @@
 ---
-- name: install nginx
-  yum: name=nginx state=latest
+
+- name: Install nginx
+  apt: "name='nginx' state=present force=yes"
+
+- name: copy nginx config of project
+  template: "src=nginx.j2 dest=/etc/nginx/sites-available/{{project_name}}.conf"
+
+- name: copy nginx conf from sites-available to sites-enabled
+  file: "src=/etc/nginx/sites-available/{{project_name}}.conf dest=/etc/nginx/sites-enabled/{{project_name}}.conf state=link"
+
+- name: create project log directory
+  file: "path=/home/{{project_name}}/logs state=directory"
+
 - name: start nginx
-  systemd: name=nginx state=started enabled=yes
+  service: "name=nginx state=started"

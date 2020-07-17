@@ -1,4 +1,9 @@
-- hosts: ansibleslave
+- hosts: slave
   become: yes
+  vars:
+   project_name: 'mysite'
   roles:
-    - update_ubuntu
+   # - update_ubuntu
+    #- wagtail_install
+    - uwsgi_wagtail
+    - nginx

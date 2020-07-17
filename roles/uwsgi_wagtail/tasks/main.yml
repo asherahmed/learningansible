@@ -1,0 +1,32 @@
+---
+
+- name: Install python-dev
+  apt: "name='python-dev' state=present force=yes"
+
+- name: Install  pip3
+  apt: "name='python3-pip' state=present force=yes"
+
+- name: install uwsgi
+  pip: "name=uwsgi executable=pip3"
+
+- name: Install supervisor
+
+  apt: name=supervisor state=present force=yes
+
+- name: Create UWSGI vassals directory
+  file: "path=/etc/uwsgi/vassals  state=directory"
+
+- name: setup uwsgi in supervisor
+  template: "src=uwsgi_service.j2 dest=/etc/supervisor/conf.d/uwsgi-runner.conf"
+
+- name: update supervisor
+  supervisorctl: name=uwsgi-runner state=restarted
+
+- name: setup project uwsgi configuration file
+  template: "src=uwsgi.j2 dest=/home/{{project_name}}/{{project_name}}_uwsgi.ini"
+
+- name: create a symlink of uwsgi in vassals
+  file: "src=/home/{{project_name}}/{{project_name}}_uwsgi.ini dest=/etc/uwsgi/vassals/{{project_name}}_uwsgi.ini state=link"
+
+- name: touch the symlink file
+  command: "touch /etc/uwsgi/vassals/{{project_name}}_uwsgi.ini"
