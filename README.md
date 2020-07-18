@@ -4,7 +4,7 @@
 This playbook was created using ansible on Amazon Linux 2. To setup MariaDB 10.3 and Wagtail. Please make sure the following:
   - Playbook is tested and deployed on Ubuntu 10.04 Bionic LTS
   - Make sure the machine is not auto updating apt if you want to run update_ubuntu role
-  - If Ubuntu is auto updating, please remove the lock file or kill the processes and restart machine.
+  - If Ubuntu is auto updating, please wait for security updates to finish until the lock is removed.
 # Steps:
   - Install ansible
   - Replace the roles folder in your own ansible directory
