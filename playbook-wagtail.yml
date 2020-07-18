@@ -3,7 +3,8 @@
   vars:
    project_name: 'mysite'
   roles:
-   # - update_ubuntu
-    #- wagtail_install
+    - update_ubuntu
+    - mariadb
+    - wagtail_install
     - uwsgi_wagtail
     - nginx
