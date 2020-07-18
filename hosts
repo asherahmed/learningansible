@@ -46,5 +46,5 @@
 [slave]
 172.31.101.207 ansible_connection=ssh ansible_ssh_user=cloud_user ansible_ssh_pass=ansible123
 [ansibleslave]
-172.31.103.242 ansible_connection=ssh ansible_ssh_user=cloud_user ansible_ssh_pass=ansible123
+172.31.109.7 ansible_connection=ssh ansible_ssh_user=cloud_user ansible_ssh_pass=ansible123
 

@@ -1,4 +1,13 @@
 ---
+
+- name: add a Apt signing key
+  command: "apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8"
+
+- name: add repo for mariadb 10.3
+  apt_repository:
+    repo: 'deb [arch=amd64,arm64,ppc64el] http://ftp.utexas.edu/mariadb/repo/10.3/ubuntu bionic main'
+    state: present
+
 - name: install mariadb
   apt:
     name:

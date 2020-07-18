@@ -1,4 +1,4 @@
-- hosts: slave
+- hosts: ansibleslave
   become: yes
   vars:
    project_name: 'mysite'
