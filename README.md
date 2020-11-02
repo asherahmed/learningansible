@@ -1,4 +1,4 @@
-# learningansible
+# wagtailansible
 
 
 This playbook was created using ansible on Amazon Linux 2. To setup MariaDB 10.3 and Wagtail. Please make sure the following:
